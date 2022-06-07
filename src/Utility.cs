@@ -19,4 +19,31 @@ public static class Utility
         }
         return output;
     }
+
+    public static void Pause()
+    {
+        System.Console.Write("\nPress any key to continue...");
+        System.Console.ReadKey();
+    }
+
+    public static void DisplayError(string err)
+    {
+        System.Console.Write("\n" + err);
+    }
+
+    public static int GetInputInRange(
+        int minInc, int maxInc,
+        string prompt, string err)
+    {
+        int output;
+        while (true)
+        {
+            output = Utility.GetInput(prompt);
+
+            if (output <= maxInc && output >= minInc)
+                break;
+            Utility.DisplayError(err);
+        }
+        return output;
+    }
 }

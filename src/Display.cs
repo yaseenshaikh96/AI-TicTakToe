@@ -7,9 +7,9 @@ public class Display
         this.gameInstance = gameInstance;
     }
 
-    public void TitleScreen()
+    public static void TitleScreen()
     {
-        System.Console.Clear();
+        Clear();
         System.Console.Write(
             "Welcome To\n" +
             "   TIC-TAK-TOE\n" +
@@ -17,21 +17,51 @@ public class Display
         );
     }
 
-    public void DisplayConsole()
+    public void GameScreen()
     {
         System.Console.Clear();
+        System.Console.Write(
+            "# of Players: " + gameInstance.numOfPlayer + "\n" +
+            "Turns: " + gameInstance.currentTurn + "/" + gameInstance.MAX_TURNS + "\n" +
+            "Current Player: " + gameInstance.currentPlayer.symbol
+        );
 
+        NewLine();
+        DisplayBoard();
+
+    }
+
+    public void GameOver()
+    {
+        Clear();
+        DisplayBoard();
+        if (gameInstance.winner == null)
+            System.Console.Write("\nIt is a draw!");
+        else
+            System.Console.Write("\nWinner: " + gameInstance.winner.symbol);
+
+        Utility.Pause();
+
+    }
+
+    private void DisplayBoard()
+    {
         for (int i = 0; i < gameInstance.boardSize; i++)
         {
             PlusLine();
             NewLine();
-            SpaceLine();
+            SpaceLine(i);
             NewLine();
         }
         PlusLine();
     }
 
     //--------------------------------------------------//
+
+    public static void Clear()
+    {
+        System.Console.Clear();
+    }
 
     private void PlusLine()
     {
@@ -40,10 +70,10 @@ public class Display
         System.Console.Write("+");
     }
 
-    private void SpaceLine()
+    private void SpaceLine(int row)
     {
         for (int i = 0; i < gameInstance.boardSize; i++)
-            System.Console.Write("|  ");
+            System.Console.Write("|{0} ", gameInstance.board[row, i]);
         System.Console.Write("|");
     }
 

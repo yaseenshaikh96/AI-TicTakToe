@@ -2,19 +2,41 @@ class Program
 {
     public static void Main()
     {
-        int numOfPlayer = Utility.GetInput("Enter Num of Players: ");
-        System.Console.Write("NumofPlayer: " + numOfPlayer);
+
+        Display.TitleScreen();
+        Utility.Pause();
+        Display.Clear();
+
+        int numOfPlayer = Utility.GetInputInRange(
+            2, Game.MAX_NUM_PLAYER,
+            "Enter Num of Players: ",
+            "# of Players must be between 2 and 4!");
 
         Game game = Game.GetInstance(numOfPlayer);
         Display display = new Display(game);
 
-        display.TitleScreen();
-
-        while (game.IsOver() == false)
+        while (!game.IsOver())
         {
+            display.GameScreen();
 
-            display.DisplayConsole();
-            game.currentTurn++;
+            int play = Utility.GetInputInRange(
+                0, game.MAX_TURNS,
+                "Enter Play: ",
+                "Enter Valid board Index");
+            // int play = Utility.GetInput("Enter Play: ");
+
+            bool playSuccess = game.Play(play);
+
+            if (game.CheckWin())
+            {
+                game.winner = game.currentPlayer;
+                break;
+            }
+            if (playSuccess)
+                game.IncrementTurn();
         }
+
+        display.GameOver();
+        Utility.Pause();
     }
 }
