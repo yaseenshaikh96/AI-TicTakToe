@@ -23,7 +23,6 @@ class Program
                 0, game.MAX_TURNS,
                 "Enter Play: ",
                 "Enter Valid board Index");
-            // int play = Utility.GetInput("Enter Play: ");
 
             bool playSuccess = game.Play(play);
 
